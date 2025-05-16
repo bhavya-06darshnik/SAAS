@@ -27,7 +27,7 @@ SECRET_KEY = ("DJANGO_SECRET_KEY")
 # DEBUG = str(os.environ.get("DJANGO_DEBUG")).lower()=="true"
 
 
-DEBUG=config("DJANGO_DEBUG", cast=bool)
+DEBUG=config("DJANGO_DEBUG", default=False, cast=bool)
 print("DEBUG", DEBUG, type(DEBUG))
 
 ALLOWED_HOSTS = [
