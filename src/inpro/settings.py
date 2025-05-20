@@ -102,7 +102,7 @@ if DATABASE_URL is not None:
     import dj_database_url
     DATABASES = {
         "default": dj_database_url.config(default=DATABASE_URL,
-                                          conn_max_age=30,
+                                          conn_max_age=CONN_MAX_AGE,
                                           conn_health_checks=True,
                                           )
 
