@@ -4,18 +4,12 @@
     <meta charset="UTF-8">
     <title>{% block head_title %}SaaS{% endblock head_title %}
     </title>
-    <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
+     {% include 'base/css.html' %}
 </head>
 <body>
-      <h1>{{ page_title }}</h1>
+      {% include 'nav/navbar.html' %}
       {% block content %}
-
-
-
-
-
-
       {% endblock content %}
-      <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
+      {% include 'base/js.html' %}
 </body>
 </html>
