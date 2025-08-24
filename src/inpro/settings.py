@@ -18,6 +18,16 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+# EMAIL CONFIGURATION
+EMAIL_BACKEND="django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST=config("EMAIL_HOST", default="smtp.gmail.com")
+EMAIL_PORT=config("EMAIL_PORT", cast=int, default=587)
+EMAIL_USE_TLS=config("EMAIL_USE_TLS", cast=bool, default=True)
+EMAIL_USE_SSL=config("EMAIL_USE_SSL", cast=bool, default=False)
+EMAIL_HOST_USER=config("EMAIL_HOST_USER", default="None")
+EMAIL_HOST_PASSWORD=config("EMAIL_HOST_PASSWORD", default="None")
+
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
@@ -27,9 +37,8 @@ SECRET_KEY = ("DJANGO_SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = str(os.environ.get("DJANGO_DEBUG")).lower()=="true"
 
+DEBUG = config("DJANGO_DEBUG", cast=bool)
 
-DEBUG=config("DJANGO_DEBUG", default=False, cast=bool)
-print("DEBUG", DEBUG, type(DEBUG))
 
 ALLOWED_HOSTS = [
     ".railway.app" # https://saas.prod.railway.app
@@ -61,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -99,7 +109,7 @@ DATABASES = {
     }
 }
 CONN_MAX_AGE=config("CONN_MAX_AGE", cast=int, default=30)
-DATABASE_URL=config('DATABASE_URL',default=None,cast=str)
+DATABASE_URL=config('DATABASE_URL',default=None)
 
 
 if DATABASE_URL is not None:
@@ -159,6 +169,17 @@ STATICFILES_DIRS = [
 # output for python manage.py collectstatic
 # local cdn
 STATIC_ROOT = BASE_DIR / "local-cdn"
+
+
+
+# < Django 4.2
+# STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 
 
